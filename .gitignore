@@ -83,3 +83,6 @@ ENV/
 
 # Spyder project settings
 .spyderproject
+
+#Client-Side
+.sass-cache
