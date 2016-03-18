@@ -12,41 +12,40 @@ print app.config['MONGOLAB_URI']
 #
 # app.config['MONGO_URL'] = MONGO_URL
 # MONGO_URL = "mongodb://localhost:27017/capstone"
-
 db = MongoEngine(app)
 
 connect('capstone')
 
 
-posts = [
-    {
-        "_id": 1,
-        "title": "West Parking Lot",
-        "body": "Absolute rager out here",
-        "time": "5:30pm",
-        "upvotes": 8,
-        "downvotes": 3,
-        "event_id": 1,
-        "user": {
-            "name": "Sam",
-            "favorites": []
-        }
-    }
-]
-
-events = [
-    {
-        "_id": 1,
-        "name": "Fare Thee Well",
-        "date": "07/03/2015",
-        "num_posts": 3,
-        "venue": {
-            "name": "Soldier Field",
-            "city": "Chicago",
-            "state": "IL"
-        }
-    }
-]
+# posts = [
+#     {
+#         "_id": 1,
+#         "title": "West Parking Lot",
+#         "body": "Absolute rager out here",
+#         "time": "5:30pm",
+#         "upvotes": 8,
+#         "downvotes": 3,
+#         "event_id": 1,
+#         "user": {
+#             "name": "Sam",
+#             "favorites": []
+#         }
+#     }
+# ]
+#
+# events = [
+#     {
+#         "_id": 1,
+#         "name": "Fare Thee Well",
+#         "date": "07/03/2015",
+#         "num_posts": 3,
+#         "venue": {
+#             "name": "Soldier Field",
+#             "city": "Chicago",
+#             "state": "IL"
+#         }
+#     }
+# ]
 
 
 @app.route('/posts')
@@ -55,8 +54,9 @@ def get_posts():
 
 @app.route('/events')
 def get_events():
-    return jsonify({'events': events})
-
+    # return jsonify({'events': events})
+    for event in Event.objects:
+        print event.name
 
 
 if __name__ == "__main__":
