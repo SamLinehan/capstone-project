@@ -25,6 +25,11 @@ angular.module('capstone', ['ionic', 'capstone.controllers', 'capstone.services'
       url:'/home',
       controller:'HomeController',
       templateUrl: 'templates/home.html'
+    })
+    .state('results', {
+      url:'/results',
+      controller:'ResultsController',
+      templateUrl: 'templates/results.html'
     });
   $urlRouterProvider.otherwise('/home');
 
