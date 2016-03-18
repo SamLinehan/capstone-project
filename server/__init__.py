@@ -17,21 +17,21 @@ db = MongoEngine(app)
 connect('capstone')
 
 
-# posts = [
-#     {
-#         "_id": 1,
-#         "title": "West Parking Lot",
-#         "body": "Absolute rager out here",
-#         "time": "5:30pm",
-#         "upvotes": 8,
-#         "downvotes": 3,
-#         "event_id": 1,
-#         "user": {
-#             "name": "Sam",
-#             "favorites": []
-#         }
-#     }
-# ]
+posts = [
+    {
+        "_id": 1,
+        "title": "West Parking Lot",
+        "body": "Absolute rager out here",
+        "time": "5:30pm",
+        "upvotes": 8,
+        "downvotes": 3,
+        "event_id": 1,
+        "user": {
+            "name": "Sam",
+            "favorites": []
+        }
+    }
+]
 #
 # events = [
 #     {
