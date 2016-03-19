@@ -1,4 +1,4 @@
-angular.module('capstone', ['ionic', 'capstone.controllers', 'capstone.services'])
+angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capstone.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
