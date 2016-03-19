@@ -32,20 +32,20 @@ posts = [
         }
     }
 ]
-#
-# events = [
-#     {
-#         "_id": 1,
-#         "name": "Fare Thee Well",
-#         "date": "07/03/2015",
-#         "num_posts": 3,
-#         "venue": {
-#             "name": "Soldier Field",
-#             "city": "Chicago",
-#             "state": "IL"
-#         }
-#     }
-# ]
+
+events = [
+    {
+        "_id": 1,
+        "name": "Fare Thee Well",
+        "date": "07/03/2015",
+        "num_posts": 3,
+        "venue": {
+            "name": "Soldier Field",
+            "city": "Chicago",
+            "state": "IL"
+        }
+    }
+]
 
 
 @app.route('/posts')
@@ -54,9 +54,9 @@ def get_posts():
 
 @app.route('/events')
 def get_events():
-    # return jsonify({'events': events})
-    for event in Event.objects:
-        print event.name
+    return jsonify({'events': events})
+    # for event in Event.objects:
+    #     print event.name
 
 
 if __name__ == "__main__":
