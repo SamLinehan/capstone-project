@@ -1,4 +1,4 @@
-angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capstone.services'])
+angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capstone.services', 'firebase'])
 
 .run(function($ionicPlatform) {
 
@@ -39,6 +39,6 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
       controller: 'PictureCtrl',
       templateUrl: 'templates/create.html'
     });
-  $urlRouterProvider.otherwise('/create');
+  $urlRouterProvider.otherwise('/home');
 
 });
