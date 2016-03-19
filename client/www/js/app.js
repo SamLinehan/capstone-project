@@ -33,7 +33,7 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
     })
     .state('create', {
       url: '/create',
-      controller: 'PictureCtrl',
+      controller: 'imageController',
       templateUrl: 'templates/create.html'
     });
   $urlRouterProvider.otherwise('/home');
