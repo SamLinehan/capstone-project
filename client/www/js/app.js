@@ -35,6 +35,11 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
       url: '/create',
       controller: 'PictureCtrl',
       templateUrl: 'templates/create.html'
+    })
+    .state('favorites', {
+      url: '/favorites',
+      controller: 'FavoritesController',
+      templateUrl: 'templates/favorites.html'
     });
   $urlRouterProvider.otherwise('/home');
 

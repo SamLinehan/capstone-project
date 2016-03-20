@@ -1,8 +1,11 @@
 from flask import Flask, make_response, jsonify
 from flask.ext.mongoengine import MongoEngine
 from mongoengine import connect
+from flask.ext.cors import CORS
+
 
 app = Flask(__name__, instance_relative_config=True)
+CORS(app, resources=r'/*', allow_headers='Content-Type')
 # app.config.from_pyfile('config.py')
 # print app.config['MONGOLAB_URI']
 
@@ -44,7 +47,18 @@ events = [
             "city": "Chicago",
             "state": "IL"
         }
-    }
+    },
+        {
+            "_id": 2,
+            "name": "Dead & Company",
+            "date": "11/25/2015",
+            "num_posts": 6,
+            "venue": {
+                "name": "First Bank Center",
+                "city": "Broomfield",
+                "state": "CO"
+            }
+        }
 ]
 
 

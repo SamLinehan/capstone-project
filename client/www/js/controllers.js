@@ -79,12 +79,27 @@ angular.module('capstone.controllers', [])
 })
 .controller('ResultsController', function(){
   console.log("Hello from Results Controller")
+})
+.controller('FavoritesController', function(){
+  console.log("Hello from favorites controller")
 });
 
-function HomeController($scope){
-   console.log("Hello from Home Controller")
+function HomeController($scope, $http){
    $scope.search = function(value){
-     console.log(value)
+     $http.get('http://localhost:5000/events').then(function(response){
+       console.log(response.data.events[0].venue)
+       console.log(value)
+       for(var i = 0; i < response.data.events; i++){
+         console.log("test");
+         if(value === response.data.events[i].name){
+           console.log("Event Name Match")
+         } else if(value === reponse.data.events[i].venue.name){
+           console.log("Venue name match")
+         } else {
+           console.log("No match")
+         }
+       }
+     })
    }
   //  $scope.googleAuth = function(){
   //   $cordovaOauth.google("589066861537-6tlold0mp9qbi9skg3m773k5du8q1f88.apps.googleusercontent.com",
