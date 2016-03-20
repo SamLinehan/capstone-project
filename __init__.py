@@ -4,17 +4,16 @@ from mongoengine import connect
 from flask.ext.cors import CORS
 
 
-app = Flask(__name__, instance_relative_config=True)
+app = Flask(__name__, instance_path='/Users/Linehan/desktop/workspace/capstone/project/instance')
 CORS(app, resources=r'/*', allow_headers='Content-Type')
-# app.config.from_pyfile('config.py')
-# print app.config['MONGOLAB_URI']
+app.config.from_pyfile('config.py')
 
-# MONGO_URL = app.config.from_envvar('MONGOLAB_URI')
-# if not MONGO_URL:
-#     MONGO_URL = "mongodb://localhost:27017/capstone"
-#
-# app.config['MONGO_URL'] = MONGO_URL
-# MONGO_URL = "mongodb://localhost:27017/capstone"
+MONGO_URL = app.config['MONGOLAB_URI']
+if not MONGO_URL:
+    MONGO_URL = "mongodb://localhost:27017/capstone"
+
+print MONGO_URL
+
 db = MongoEngine(app)
 
 connect('capstone')
