@@ -86,3 +86,4 @@ ENV/
 
 #Client-Side
 .sass-cache
+config.py
