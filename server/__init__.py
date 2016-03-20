@@ -3,8 +3,8 @@ from flask.ext.mongoengine import MongoEngine
 from mongoengine import connect
 
 app = Flask(__name__, instance_relative_config=True)
-app.config.from_pyfile('config.py')
-print app.config['MONGOLAB_URI']
+# app.config.from_pyfile('config.py')
+# print app.config['MONGOLAB_URI']
 
 # MONGO_URL = app.config.from_envvar('MONGOLAB_URI')
 # if not MONGO_URL:

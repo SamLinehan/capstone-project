@@ -8,9 +8,6 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-    } else {
-      console.log(navigator.camera)
-      console.log("No cordova...")
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
