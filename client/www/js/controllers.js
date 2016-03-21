@@ -77,8 +77,23 @@ angular.module('capstone.controllers', [])
           return trueOrigin;
       }
 })
-.controller('ResultsController', function(){
+.controller('ResultsController', function($scope, $http){
   console.log("Hello from Results Controller")
+  $scope.createEvent = function(eventName, venueName, venueCity, venueState){
+    console.log(eventName)
+    console.log(venueName)
+    console.log(venueCity)
+    console.log(venueState)
+    var data = {
+        eventName: eventName,
+        venueName: venueName,
+        venueCity: venueCity,
+        venueState: venueState
+    }
+    $http.post('http://localhost:5000/create_event', data).then(function(response){
+      console.log(data)
+    })
+  }
 })
 .controller('FavoritesController', function(){
   console.log("Hello from favorites controller")
@@ -87,16 +102,16 @@ angular.module('capstone.controllers', [])
 function HomeController($scope, $http){
    $scope.search = function(value){
      $http.get('http://localhost:5000/events').then(function(response){
-       console.log(response.data.events[0].venue)
-       console.log(value)
-       for(var i = 0; i < response.data.events; i++){
-         console.log("test");
+       for(var i = 0; i < response.data.events.length; i++){
          if(value === response.data.events[i].name){
            console.log("Event Name Match")
-         } else if(value === reponse.data.events[i].venue.name){
+           return
+         } else if(value === response.data.events[i].venue.name){
            console.log("Venue name match")
+           return
          } else {
            console.log("No match")
+           return
          }
        }
      })

@@ -1,7 +1,9 @@
-from flask import Flask, make_response, jsonify
-from flask.ext.mongoengine import MongoEngine
-from mongoengine import connect
+from flask import Flask, make_response, jsonify, request
 from flask.ext.cors import CORS
+from flask.ext import restful
+import pymongo
+from pymongo import MongoClient
+from bson.json_util import dumps
 
 
 app = Flask(__name__, instance_path='/Users/Linehan/desktop/workspace/capstone/project/instance')
@@ -12,11 +14,10 @@ MONGO_URL = app.config['MONGOLAB_URI']
 if not MONGO_URL:
     MONGO_URL = "mongodb://localhost:27017/capstone"
 
-print MONGO_URL
-
-db = MongoEngine(app)
-
-connect('capstone')
+client = MongoClient('mongodb://localhost:27017/')
+db = client['capstone']
+events_collection = db['events']
+print dumps(events_collection.find_one())
 
 
 posts = [
@@ -67,9 +68,13 @@ def get_posts():
 
 @app.route('/events')
 def get_events():
-    return jsonify({'events': events})
-    # for event in Event.objects:
-    #     print event.name
+    return dumps(events_collection.find_one())
+
+
+@app.route('/create_event', methods=['POST'])
+def create_event():
+    form_data = request.data
+    print form_data
 
 
 if __name__ == "__main__":
