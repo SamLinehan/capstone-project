@@ -11,12 +11,14 @@ CORS(app, resources=r'/*', allow_headers='Content-Type')
 app.config.from_pyfile('config.py')
 
 MONGO_URL = app.config['MONGOLAB_URI']
-print MONGO_URL
+DB_NAME = app.config['DB_NAME']
 if not MONGO_URL:
     MONGO_URL = "mongodb://localhost:27017/capstone"
 
+print MONGO_URL
+print DB_NAME
 client = MongoClient(MONGO_URL)
-db = client['capstone']
+db = client[DB_NAME]
 events_collection = db['events']
 print dumps(events_collection.find())
 
