@@ -12,6 +12,14 @@
     </label>
   </form>
 </div>
+<section class="searchResults" ng-init="results">
+  <div ng-repeat="result in results">
+    <h5>{{result.name}}</h5>
+    <p>{{result.venue.name}}<p>
+    <p>{{result.venue.city}}, {{result.venue.state}}</p>
+    <button type="button" name="viewPostsButton">View Posts</button>
+  </div>
+</section>
 <section>
   <button ng-click="showEventForm()" type="button" name="button">Add an Event</button>
   <form ng-show="showForm" class="createEventForm" ng-submit="createEvent(eventName, venueName, venueCity, venueState)">
@@ -23,6 +31,6 @@
     <input type="text" name="venueCity" ng-model="venueCity">
     <label for="venueState">State</label>
     <input type="text" name="venueState" ng-model="venueState">
-    <input type="submit" name="name" value="Add Event">
+    <input type="submit" name="name" value="Add Event" ng-click="hideEventForm()">
   </form>
 </section>

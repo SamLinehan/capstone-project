@@ -39,10 +39,21 @@ posts = [
         "event_id": 1,
         "user": {
             "name": "Sam",
-            "favorites": []
         }
     }
 ]
+
+# event_posts = {
+#     "_id" : 1,
+#     "event_id" : "reference id"
+#     "posts": [{
+#             "body": "Absolute rager out here",
+#             "time": "5:30pm",
+#             "user": {
+#                 "name": "Sam",
+#             }
+#     }]
+# }
 
 
 @app.route('/posts')

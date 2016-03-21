@@ -6,7 +6,6 @@ angular.module('capstone.controllers', [])
   $scope.images = [];
 
       $scope.addImage = function() {
-          // 2
           var options = {
               destinationType : Camera.DestinationType.FILE_URI,
               sourceType : Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
@@ -15,10 +14,8 @@ angular.module('capstone.controllers', [])
               popoverOptions: CameraPopoverOptions,
           };
 
-          // 3
           $cordovaCamera.getPicture(options).then(function(imageData) {
 
-              // 4
               onImageSuccess(imageData);
 
               function onImageSuccess(fileURI) {
@@ -29,7 +26,6 @@ angular.module('capstone.controllers', [])
                   window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
               }
 
-              // 5
               function copyFile(fileEntry) {
                   var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
                   var newName = makeid() + name;
@@ -45,7 +41,6 @@ angular.module('capstone.controllers', [])
                   fail);
               }
 
-              // 6
               function onCopySuccess(entry) {
                   $scope.$apply(function () {
                       $scope.images.push(entry.nativeURL);
@@ -77,27 +72,27 @@ angular.module('capstone.controllers', [])
           return trueOrigin;
       }
 })
-.controller('ResultsController', function($scope, $http){
-  console.log("Hello from Results Controller")
-})
 .controller('FavoritesController', function(){
   console.log("Hello from favorites controller")
 });
 
 function HomeController($scope, $http){
    $scope.search = function(value){
+     $scope.results = []
      $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
        for(var i = 0; i < response.data.length; i++){
          if(value === response.data[i].name){
            console.log("Event Name Match")
-           return
+           $scope.results.push(response.data[i])
          } else if(value === response.data[i].venue.name){
            console.log("Venue name match")
-           return
-         } else {
-           console.log("No match")
-           return
+           $scope.results.push(response.data[i])
          }
+       }
+       if($scope.results.length > 0){
+         console.log(results)
+       } else {
+         console.log("No Matches")
        }
      })
    }
@@ -108,12 +103,15 @@ function HomeController($scope, $http){
          venueCity: venueCity,
          venueState: venueState
      }
-     $http.post('http://localhost:5000/create_event', data).then(function(response){
+     $http.post('https://infinite-waters-87993.herokuapp.com/create_event', data).then(function(response){
        console.log(data)
      })
    }
    $scope.showEventForm = function(){
      $scope.showForm = true;
+   }
+   $scope.hideEventForm = function(){
+     $scope.showForm = false;
    }
   //  $scope.googleAuth = function(){
   //   $cordovaOauth.google("589066861537-6tlold0mp9qbi9skg3m773k5du8q1f88.apps.googleusercontent.com",
