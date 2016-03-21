@@ -11,6 +11,7 @@ CORS(app, resources=r'/*', allow_headers='Content-Type')
 app.config.from_pyfile('config.py')
 
 MONGO_URL = app.config['MONGOLAB_URI']
+print MONGO_URL
 if not MONGO_URL:
     MONGO_URL = "mongodb://localhost:27017/capstone"
 

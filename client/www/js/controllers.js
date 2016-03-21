@@ -101,7 +101,7 @@ angular.module('capstone.controllers', [])
 
 function HomeController($scope, $http){
    $scope.search = function(value){
-     $http.get('http://localhost:5000/events').then(function(response){
+     $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
        console.log(response.data)
        console.log(response.data.length)
        for(var i = 0; i < response.data.length; i++){
