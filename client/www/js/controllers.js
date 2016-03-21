@@ -79,21 +79,6 @@ angular.module('capstone.controllers', [])
 })
 .controller('ResultsController', function($scope, $http){
   console.log("Hello from Results Controller")
-  $scope.createEvent = function(eventName, venueName, venueCity, venueState){
-    console.log(eventName)
-    console.log(venueName)
-    console.log(venueCity)
-    console.log(venueState)
-    var data = {
-        eventName: eventName,
-        venueName: venueName,
-        venueCity: venueCity,
-        venueState: venueState
-    }
-    $http.post('http://localhost:5000/create_event', data).then(function(response){
-      console.log(data)
-    })
-  }
 })
 .controller('FavoritesController', function(){
   console.log("Hello from favorites controller")
@@ -102,8 +87,6 @@ angular.module('capstone.controllers', [])
 function HomeController($scope, $http){
    $scope.search = function(value){
      $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
-       console.log(response.data)
-       console.log(response.data.length)
        for(var i = 0; i < response.data.length; i++){
          if(value === response.data[i].name){
            console.log("Event Name Match")
@@ -117,6 +100,20 @@ function HomeController($scope, $http){
          }
        }
      })
+   }
+   $scope.createEvent = function(eventName, venueName, venueCity, venueState){
+     var data = {
+         eventName: eventName,
+         venueName: venueName,
+         venueCity: venueCity,
+         venueState: venueState
+     }
+     $http.post('http://localhost:5000/create_event', data).then(function(response){
+       console.log(data)
+     })
+   }
+   $scope.showEventForm = function(){
+     $scope.showForm = true;
    }
   //  $scope.googleAuth = function(){
   //   $cordovaOauth.google("589066861537-6tlold0mp9qbi9skg3m773k5du8q1f88.apps.googleusercontent.com",

@@ -26,11 +26,6 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
       controller:'HomeController',
       templateUrl: 'templates/home.html'
     })
-    .state('results', {
-      url:'/results',
-      controller:'ResultsController',
-      templateUrl: 'templates/results.html'
-    })
     .state('create', {
       url: '/create',
       controller: 'PictureCtrl',

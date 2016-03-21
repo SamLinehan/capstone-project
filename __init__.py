@@ -6,6 +6,9 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 from os.path import join, dirname
 from dotenv import load_dotenv
+import ast
+import datetime
+
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -19,12 +22,10 @@ DB_NAME = os.environ.get("DB_NAME")
 if not MONGO_URL:
     MONGO_URL = "mongodb://localhost:27017/capstone"
 
-print (MONGO_URL)
-print (DB_NAME)
+
 client = MongoClient(MONGO_URL)
 db = client[DB_NAME]
 events_collection = db['events']
-print (dumps(events_collection.find()))
 
 
 posts = [
@@ -43,31 +44,6 @@ posts = [
     }
 ]
 
-events = [
-    {
-        "_id": 1,
-        "name": "Fare Thee Well",
-        "date": "07/03/2015",
-        "num_posts": 3,
-        "venue": {
-            "name": "Soldier Field",
-            "city": "Chicago",
-            "state": "IL"
-        }
-    },
-        {
-            "_id": 2,
-            "name": "Dead & Company",
-            "date": "11/25/2015",
-            "num_posts": 6,
-            "venue": {
-                "name": "First Bank Center",
-                "city": "Broomfield",
-                "state": "CO"
-            }
-        }
-]
-
 
 @app.route('/posts')
 def get_posts():
@@ -80,9 +56,22 @@ def get_events():
 
 @app.route('/create_event', methods=['POST'])
 def create_event():
-    form_data = request.data
-    print (form_data)
-
+    form_data = ast.literal_eval((request.data).decode())
+    venue_city = form_data["venueCity"]
+    venue_name = form_data["venueName"]
+    venue_state = form_data["venueState"]
+    event_name = form_data["eventName"]
+    db.events.insert_one(
+        {
+        "date": "11/13/2015",
+        "venue": {
+            "city": venue_city,
+            "state": venue_state,
+            "name": venue_name
+            },
+        "name": event_name
+        }
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
