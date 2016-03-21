@@ -17,7 +17,7 @@ if not MONGO_URL:
 client = MongoClient('mongodb://localhost:27017/')
 db = client['capstone']
 events_collection = db['events']
-print dumps(events_collection.find_one())
+print dumps(events_collection.find())
 
 
 posts = [
@@ -68,7 +68,7 @@ def get_posts():
 
 @app.route('/events')
 def get_events():
-    return dumps(events_collection.find_one())
+    return dumps(events_collection.find())
 
 
 @app.route('/create_event', methods=['POST'])

@@ -102,11 +102,13 @@ angular.module('capstone.controllers', [])
 function HomeController($scope, $http){
    $scope.search = function(value){
      $http.get('http://localhost:5000/events').then(function(response){
-       for(var i = 0; i < response.data.events.length; i++){
-         if(value === response.data.events[i].name){
+       console.log(response.data)
+       console.log(response.data.length)
+       for(var i = 0; i < response.data.length; i++){
+         if(value === response.data[i].name){
            console.log("Event Name Match")
            return
-         } else if(value === response.data.events[i].venue.name){
+         } else if(value === response.data[i].venue.name){
            console.log("Venue name match")
            return
          } else {
