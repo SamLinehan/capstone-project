@@ -1,5 +1,4 @@
 import os
-import markerlib
 from flask import Flask, make_response, jsonify, request
 from flask.ext.cors import CORS
 import pymongo
@@ -14,10 +13,6 @@ load_dotenv(dotenv_path)
 
 app = Flask(__name__, instance_path='/Users/Linehan/desktop/workspace/capstone/project/instance')
 CORS(app, resources=r'/*', allow_headers='Content-Type')
-# app.config.from_pyfile('config.py')
-
-# MONGO_URL = app.config['MONGOLAB_URI']
-# DB_NAME = app.config['DB_NAME']
 
 MONGO_URL = os.environ.get("MONGOLAB_URI")
 DB_NAME = os.environ.get("DB_NAME")
