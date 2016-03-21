@@ -1,6 +1,6 @@
 from flask import Flask, make_response, jsonify, request
 from flask.ext.cors import CORS
-from flask.ext import restful
+# from flask.ext import restful
 import pymongo
 from pymongo import MongoClient
 from bson.json_util import dumps
@@ -14,7 +14,7 @@ MONGO_URL = app.config['MONGOLAB_URI']
 if not MONGO_URL:
     MONGO_URL = "mongodb://localhost:27017/capstone"
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient(MONGO_URL)
 db = client['capstone']
 events_collection = db['events']
 print dumps(events_collection.find())
