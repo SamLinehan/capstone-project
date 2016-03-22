@@ -3,6 +3,7 @@ flask-mongoengine==0.7.5
 Flask-Script==2.0.5
 Flask-Cors==2.1.2
 Flask-RESTful==0.3.5
+Flask-SocketIO==2.2
 Flask-WTF==0.12
 gunicorn==19.4.5
 itsdangerous==0.24

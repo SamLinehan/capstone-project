@@ -6,6 +6,7 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 from os.path import join, dirname
 from dotenv import load_dotenv
+from flask.ext.socketio import SocketIO, emit
 import ast
 import datetime
 
@@ -16,6 +17,7 @@ load_dotenv(dotenv_path)
 
 app = Flask(__name__, instance_path='/Users/Linehan/desktop/workspace/capstone/project/instance')
 CORS(app, resources=r'/*', allow_headers='Content-Type')
+socketio = SocketIO(app)
 
 MONGO_URL = os.environ.get("MONGOLAB_URI")
 DB_NAME = os.environ.get("DB_NAME")
@@ -26,6 +28,7 @@ if not MONGO_URL:
 client = MongoClient(MONGO_URL)
 db = client[DB_NAME]
 events_collection = db['events']
+rooms_collection = db['rooms']
 
 
 posts = [
@@ -72,17 +75,20 @@ def create_event():
     venue_name = form_data["venueName"]
     venue_state = form_data["venueState"]
     event_name = form_data["eventName"]
-    db.events.insert_one(
-        {
+    new_event = {
         "date": "11/13/2015",
         "venue": {
             "city": venue_city,
             "state": venue_state,
             "name": venue_name
             },
-        "name": event_name
+        "name": event_name,
+        "room": {
+            "name" : venueName,
+            "posts": []
+            }
         }
-    )
+    db.events.insert_one(new_event)
 
 if __name__ == "__main__":
     app.run(debug=True)
