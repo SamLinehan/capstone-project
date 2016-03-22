@@ -20,7 +20,6 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
   console.log("Hello from Ionic!!!")
   $stateProvider
 
-  // setup an abstract state for the tabs directive
     .state('home', {
       url:'/home',
       controller:'HomeController',
@@ -29,7 +28,7 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
     .state('create', {
       url: '/create',
       controller: 'PictureCtrl',
-      templateUrl: 'templates/create.html'
+      templateUrl: 'templates/modal.html'
     })
     .state('favorites', {
       url: '/favorites',
@@ -38,10 +37,10 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
     })
     .state('room',{
       url: '/room/:id',
-      controller: function($scope, $stateParams, $http){
+      controller: function($scope, $stateParams, $http, $ionicModal){
         $scope.id = $stateParams.id
-        $scope.postResults = []
         $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
+          $scope.postResults = []
           for(var i = 0; i < response.data.length; i++){
             if($scope.id === response.data[i]._id.$oid){
               for(var j = 0; j < response.data[i].posts.length; j++){
@@ -51,6 +50,43 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
             }
           }
         })
+
+      $scope.showModal = function(){
+        console.log("testing modal button")
+        $scope.modal.show()
+      };
+
+      $scope.hideModal = function() {
+        $scope.modal.hide();
+      };
+
+      $ionicModal.fromTemplateUrl('templates/modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
+
+      $scope.createPost = function(postBody, postName, postImage) {
+        if(postImage === undefined){
+          var data = {
+            id: $scope.id,
+            body: postBody,
+            name: postName
+          }
+        } else {
+          var data = {
+            id: $scope.id,
+            body: postBody,
+            name: postName,
+            image: postImage
+          }
+        }
+        $http.post("http://localhost:5000/create_post", data).then(function(response){
+          console.log(data)
+          return
+        })
+      };
         // var socket = io.connect('http://localhost:5000/test')
         // socket.on('test_event', function(message){
         //   console.log(message)

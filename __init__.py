@@ -4,6 +4,7 @@ from flask.ext.cors import CORS
 import pymongo
 from pymongo import MongoClient
 from bson.json_util import dumps
+from bson.objectid import ObjectId
 from os.path import join, dirname
 from dotenv import load_dotenv
 from flask.ext.socketio import SocketIO, emit
@@ -28,35 +29,6 @@ if not MONGO_URL:
 client = MongoClient(MONGO_URL)
 db = client[DB_NAME]
 events_collection = db['events']
-rooms_collection = db['rooms']
-
-
-posts = [
-    {
-        "_id": 1,
-        "title": "West Parking Lot",
-        "body": "Absolute rager out here",
-        "time": "5:30pm",
-        "upvotes": 8,
-        "downvotes": 3,
-        "event_id": 1,
-        "user": {
-            "name": "Sam"
-        }
-    }
-]
-
-# db.events.update(
-#     { "_id": ObjectId("56f160aee625da000d147adb")},
-#     { $push:
-#         { "posts": {
-#             "body": "Come to the east side",
-#             "image": "image_url",
-#             "time": "6:30pm",
-#             "name": "Jah Man"
-#             }
-#         }
-# })
 
 
 @app.route('/posts')
@@ -87,6 +59,38 @@ def create_event():
         "posts": []
         }
     )
+
+@app.route('/create_post', methods=['POST'])
+def create_post():
+    form_data = ast.literal_eval((request.data).decode())
+    print(form_data)
+    venue_id = form_data["id"]
+    post_body = form_data["body"]
+    post_name = form_data["name"]
+    if "image" in form_data:
+        post_image = form_data["image"]
+        db.events.update(
+            { "_id": ObjectId(venue_id)},
+            { "$push":
+                { "posts": {
+                    "body": post_body,
+                    "image": post_image,
+                    "time": datetime.datetime.utcnow(),
+                    "name": post_name
+                    }
+                }
+        })
+    else:
+        db.events.update(
+            { "_id": ObjectId(venue_id)},
+            { "$push":
+                { "posts": {
+                    "body": post_body,
+                    "time": datetime.datetime.utcnow(),
+                    "name": post_name
+                    }
+                }
+        })
 
 @socketio.on('test_event', namespace="/test")
 def test_message(message):

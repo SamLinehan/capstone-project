@@ -1,7 +1,8 @@
 angular.module('capstone.controllers', [])
 
 .controller('HomeController', HomeController)
-.controller('PictureCtrl', function($scope, $cordovaCamera, $cordovaFile) {
+.controller('PictureCtrl', function($scope, $cordovaCamera, $cordovaFile, $http) {
+
 
   $scope.images = [];
 
@@ -115,6 +116,7 @@ function HomeController($scope, $http){
    $scope.hideEventForm = function(){
      $scope.showForm = false;
    }
+
 
   //  $scope.googleAuth = function(){
   //   $cordovaOauth.google("589066861537-6tlold0mp9qbi9skg3m773k5du8q1f88.apps.googleusercontent.com",
