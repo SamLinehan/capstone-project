@@ -77,7 +77,7 @@ angular.module('capstone.controllers', [])
   console.log("Hello from favorites controller")
 });
 
-function HomeController($scope, $http){
+function HomeController($scope, $http, $ionicModal){
    $scope.search = function(value){
      $scope.results = []
      $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
@@ -110,11 +110,21 @@ function HomeController($scope, $http){
        return;
      })
    }
-   $scope.showEventForm = function(){
-     $scope.showForm = true;
+
+   $ionicModal.fromTemplateUrl('templates/eventModal.html', {
+     scope: $scope,
+     animation: 'slide-in-up'
+   }).then(function(modal) {
+     $scope.modal = modal;
+   });
+
+   $scope.showEventModal = function(){
+     console.log("test show event modal")
+     $scope.modal.show()
    }
-   $scope.hideEventForm = function(){
-     $scope.showForm = false;
+
+   $scope.hideEventModal = function(){
+     $scope.modal.hide()
    }
 
 

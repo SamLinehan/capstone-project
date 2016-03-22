@@ -52,7 +52,6 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
         })
 
       $scope.showModal = function(){
-        console.log("testing modal button")
         $scope.modal.show()
       };
 
@@ -82,15 +81,19 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
             image: postImage
           }
         }
-        $http.post("http://localhost:5000/create_post", data).then(function(response){
+        $http.post("https://infinite-waters-87993.herokuapp.com/create_post", data).then(function(response){
           console.log(data)
           return
         })
       };
-        // var socket = io.connect('http://localhost:5000/test')
-        // socket.on('test_event', function(message){
-        //   console.log(message)
-        // })
+        var socket = io.connect('https://infinite-waters-87993.herokuapp.com/test')
+        socket.on('test_event', function(message){
+          console.log(message)
+        })
+
+        socket.on('newPostEvent', function(post){
+          console.log(post)
+        })
       },
       templateUrl: 'templates/live.html'
     });

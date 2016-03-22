@@ -22,17 +22,36 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "www/lib/ionic/scss/ionic";
 
 
-h1 {
-  margin-top: 50px;
-  color: red;
-}
-
-.templateView {
-  margin-top: 100px;
+.background, .background .pane, .background .item, .background .item-complex .item-content {
   background-color: hsl(226, 39%, 24%);
   color: hsl(37, 97%, 92%);
 }
 
+.templateView {
+  display: flex;
+  flex-direction: column;
+  margin-top: 45px;
+  *:not(.searchForm) {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .searchForm input{
+    color: hsl(37, 97%, 92%);
+  }
+  .eventModalButton{
+    width: 50%;
+    align-self: center;
+    padding: 1%;
+    background-color: hsl(51, 100%, 57%);
+    border: none;
+  }
+  .resultsSection{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
 .createView {
-  margin-top: 200px;
+  // margin-top: 200px;
 }

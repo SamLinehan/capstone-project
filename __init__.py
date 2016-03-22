@@ -67,6 +67,7 @@ def create_post():
     venue_id = form_data["id"]
     post_body = form_data["body"]
     post_name = form_data["name"]
+    post_date = datetime.datetime.utcnow()
     if "image" in form_data:
         post_image = form_data["image"]
         db.events.update(
@@ -75,7 +76,7 @@ def create_post():
                 { "posts": {
                     "body": post_body,
                     "image": post_image,
-                    "time": datetime.datetime.utcnow(),
+                    "time": post_date,
                     "name": post_name
                     }
                 }
@@ -86,20 +87,30 @@ def create_post():
             { "$push":
                 { "posts": {
                     "body": post_body,
-                    "time": datetime.datetime.utcnow(),
+                    "time": post_date,
                     "name": post_name
                     }
                 }
         })
+        socketio.emit('newPostEvent', {'newPost': {
+                    "event_id": ObjectId(venue_id),
+                     "post": {
+                            "body": post_body,
+                            "time": post_date,
+                            "user_name": post_name
+                            }
+                        } })
 
 @socketio.on('test_event', namespace="/test")
 def test_message(message):
     emit('testing', {'data': message['data']})
 
+
 @socketio.on('connect', namespace="/test")
 def test_connect():
     print("Connected!!!")
-    emit('connected', {'data': 'Connected'})
+    emit('test_event', {'data': 'Connected'})
+
 
 @socketio.on('disconnect', namespace="/test")
 def test_disconnect():
