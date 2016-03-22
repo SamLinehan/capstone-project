@@ -17,7 +17,7 @@ load_dotenv(dotenv_path)
 
 
 app = Flask(__name__, instance_path='/Users/Linehan/desktop/workspace/capstone/project/instance')
-CORS(app, resources=r'/*', allow_headers='Content-Type')
+CORS(app, resources={r'/*' : {"origins": "*"}}, allow_headers='Content-Type')
 socketio = SocketIO(app)
 
 MONGO_URL = os.environ.get("MONGOLAB_URI")
