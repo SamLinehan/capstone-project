@@ -35,6 +35,11 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
       url: '/favorites',
       controller: 'FavoritesController',
       templateUrl: 'templates/favorites.html'
+    })
+    .state('room',{
+      url: '/room/:id',
+      controller: 'HomeController',
+      templateUrl: 'templates/live.html'
     });
   $urlRouterProvider.otherwise('/home');
 

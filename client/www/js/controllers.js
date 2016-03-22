@@ -105,6 +105,7 @@ function HomeController($scope, $http){
      }
      $http.post('https://infinite-waters-87993.herokuapp.com/create_event', data).then(function(response){
        console.log(data)
+       return;
      })
    }
    $scope.showEventForm = function(){
@@ -112,6 +113,14 @@ function HomeController($scope, $http){
    }
    $scope.hideEventForm = function(){
      $scope.showForm = false;
+   }
+   $scope.showEventPosts = function(result){
+     console.log(result)
+     console.log(result.room.posts)
+     $scope.selectedEvent = result.room.posts
+    //  $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
+    //
+    //  })
    }
   //  $scope.googleAuth = function(){
   //   $cordovaOauth.google("589066861537-6tlold0mp9qbi9skg3m773k5du8q1f88.apps.googleusercontent.com",

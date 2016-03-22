@@ -17,7 +17,7 @@
     <h5>{{result.name}}</h5>
     <p>{{result.venue.name}}<p>
     <p>{{result.venue.city}}, {{result.venue.state}}</p>
-    <button type="button" name="viewPostsButton">View Posts</button>
+    <button ng-click="showEventPosts(result)" type="button" name="viewPostsButton">View Posts</button>
   </div>
 </section>
 <section>
