@@ -51,10 +51,10 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
             }
           }
         })
-        var socket = io.connect('http://localhost:5000/test')
-        socket.on('test_event', function(message){
-          console.log(message)
-        })
+        // var socket = io.connect('http://localhost:5000/test')
+        // socket.on('test_event', function(message){
+        //   console.log(message)
+        // })
       },
       templateUrl: 'templates/live.html'
     });
