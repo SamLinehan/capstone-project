@@ -40,15 +40,20 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
       url: '/room/:id',
       controller: function($scope, $stateParams, $http){
         $scope.id = $stateParams.id
+        $scope.postResults = []
         $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
-          var postResults = []
           for(var i = 0; i < response.data.length; i++){
             if($scope.id === response.data[i]._id.$oid){
-              console.log(response.data[i])
-              console.log(response.data[i].posts)
-              postResults.push(response.data[i].posts)
+              for(var j = 0; j < response.data[i].posts.length; j++){
+                $scope.postResults.push(response.data[i].posts[j])
+              }
+              console.log($scope.postResults)
             }
           }
+        })
+        var socket = io.connect('http://localhost:5000/test')
+        socket.on('test_event', function(message){
+          console.log(message)
         })
       },
       templateUrl: 'templates/live.html'

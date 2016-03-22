@@ -1,3 +1,10 @@
-<div class="templateView">
-  <h1>Test Live View</h1>
-</div>
+<section class="templateView" ng-init="postResults">
+  <div ng-repeat="postResult in postResults">
+    <p>
+      {{postResult.body}}
+    </p>
+    <p>
+      {{postResult.name}}
+    </p>
+  </div>
+</section>

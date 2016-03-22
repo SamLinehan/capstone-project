@@ -47,31 +47,16 @@ posts = [
 ]
 
 # db.events.update(
-#     { "_id": ObjectId("56f094ebd7a31b000eef2bf9")},
+#     { "_id": ObjectId("56f160aee625da000d147adb")},
 #     { $push:
-#         { "room":
-#             { "posts": {
-#                 "body": "Absolute rager out here",
-#                 "image": "image_url"
-#                 "time": "5:30pm",
-#                 "user": {
-#                     "name": "Sam"
-#                     }
-#                 }
+#         { "posts": {
+#             "body": "Come to the east side",
+#             "image": "image_url",
+#             "time": "6:30pm",
+#             "name": "Jah Man"
 #             }
 #         }
 # })
-
-# event_posts = {
-#     "posts": [{
-#             "body": "Absolute rager out here",
-#             "image": "image_url"
-#             "time": "5:30pm",
-#             "user": {
-#                 "name": "Sam",
-#             }
-#     }]
-# }
 
 
 @app.route('/posts')
@@ -103,5 +88,19 @@ def create_event():
         }
     )
 
+@socketio.on('test_event', namespace="/test")
+def test_message(message):
+    emit('testing', {'data': message['data']})
+
+@socketio.on('connect', namespace="/test")
+def test_connect():
+    print("Connected!!!")
+    emit('connected', {'data': 'Connected'})
+
+@socketio.on('disconnect', namespace="/test")
+def test_disconnect():
+    print('Client Disconnected')
+
 if __name__ == "__main__":
     app.run(debug=True)
+    socketio.run(app)

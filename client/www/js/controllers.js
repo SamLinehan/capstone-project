@@ -81,7 +81,6 @@ function HomeController($scope, $http){
      $scope.results = []
      $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
        console.log(response.data)
-       console.log(response.data[2].venue.name)
        for(var i = 0; i < response.data.length; i++){
          if(value === response.data[i].name){
            console.log("Event Name Match")
