@@ -41,16 +41,31 @@ posts = [
         "downvotes": 3,
         "event_id": 1,
         "user": {
-            "name": "Sam",
+            "name": "Sam"
         }
     }
 ]
 
+# db.events.update(
+#     { "_id": ObjectId("56f094ebd7a31b000eef2bf9")},
+#     { $push:
+#         { "room":
+#             { "posts": {
+#                 "body": "Absolute rager out here",
+#                 "image": "image_url"
+#                 "time": "5:30pm",
+#                 "user": {
+#                     "name": "Sam"
+#                     }
+#                 }
+#             }
+#         }
+# })
+
 # event_posts = {
-#     "_id" : 1,
-#     "event_id" : "reference id"
 #     "posts": [{
 #             "body": "Absolute rager out here",
+#             "image": "image_url"
 #             "time": "5:30pm",
 #             "user": {
 #                 "name": "Sam",
@@ -84,10 +99,7 @@ def create_event():
             "name": venue_name
             },
         "name": event_name,
-        "room": {
-            "name" : event_name,
-            "posts": []
-            }
+        "posts": []
         }
     )
 

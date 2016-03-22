@@ -80,6 +80,8 @@ function HomeController($scope, $http){
    $scope.search = function(value){
      $scope.results = []
      $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
+       console.log(response.data)
+       console.log(response.data[2].venue.name)
        for(var i = 0; i < response.data.length; i++){
          if(value === response.data[i].name){
            console.log("Event Name Match")
@@ -114,14 +116,7 @@ function HomeController($scope, $http){
    $scope.hideEventForm = function(){
      $scope.showForm = false;
    }
-   $scope.showEventPosts = function(result){
-     console.log(result)
-     console.log(result.room.posts)
-     $scope.selectedEvent = result.room.posts
-    //  $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
-    //
-    //  })
-   }
+
   //  $scope.googleAuth = function(){
   //   $cordovaOauth.google("589066861537-6tlold0mp9qbi9skg3m773k5du8q1f88.apps.googleusercontent.com",
   //     ["https://www.googleapis.com/auth/urlshortener", "https://www.googleapis.com/auth/userinfo.email",

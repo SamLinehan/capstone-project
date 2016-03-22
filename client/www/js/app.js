@@ -7,7 +7,7 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+      // cordova.plugins.Keyboard.disableScroll(true);
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
@@ -38,7 +38,19 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
     })
     .state('room',{
       url: '/room/:id',
-      controller: 'HomeController',
+      controller: function($scope, $stateParams, $http){
+        $scope.id = $stateParams.id
+        $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
+          var postResults = []
+          for(var i = 0; i < response.data.length; i++){
+            if($scope.id === response.data[i]._id.$oid){
+              console.log(response.data[i])
+              console.log(response.data[i].posts)
+              postResults.push(response.data[i].posts)
+            }
+          }
+        })
+      },
       templateUrl: 'templates/live.html'
     });
   $urlRouterProvider.otherwise('/home');

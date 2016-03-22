@@ -1,36 +1,40 @@
-<div class="templateView">
-  <h2>Welcome! Please Log in</h2>
-  <button class="button icon-left ion-social-twitter"></button>
-  <button ng-click="googleAuth()" class="button icon-left ion-social-google"></button>
-</div>
-<h3>Look up a Venue or Event</h3>
-<div class="list list-inset">
-  <form class="searchForm" ng-submit="search(value)">
-    <label class="item item-input">
-      <i class="icon ion-search placeholder-icon"></i>
-      <input type="text" ng-model="value" placeholder="Search" />
-    </label>
-  </form>
-</div>
-<section class="searchResults" ng-init="results">
-  <div ng-repeat="result in results">
-    <h5>{{result.name}}</h5>
-    <p>{{result.venue.name}}<p>
-    <p>{{result.venue.city}}, {{result.venue.state}}</p>
-    <button ng-click="showEventPosts(result)" type="button" name="viewPostsButton">View Posts</button>
+<ion-scroll direction="xy" height="1000px">
+  <div class="templateView">
+    <h2>Welcome! Please Log in</h2>
+    <button class="button icon-left ion-social-twitter"></button>
+    <button ng-click="googleAuth()" class="button icon-left ion-social-google"></button>
+
+    <h3>Look up a Venue or Event</h3>
+    <div class="list list-inset">
+      <form class="searchForm" ng-submit="search(value)">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" ng-model="value" placeholder="Search" />
+        </label>
+      </form>
+    </div>
+    <section class="searchResults" ng-init="results">
+      <div ng-repeat="result in results">
+        <h5>{{result.name}}</h5>
+        <p>{{result.venue.name}}<p>
+        <p>{{result.venue.city}}, {{result.venue.state}}</p>
+        <p>{{result._id.$oid}}
+        <button ui-sref="room({id: result._id.$oid})" type="button" name="viewPostsButton">View Posts</button>
+      </div>
+    </section>
+    <section>
+      <button ng-click="showEventForm()" type="button" name="button">Add an Event</button>
+      <form ng-show="showForm" class="createEventForm" ng-submit="createEvent(eventName, venueName, venueCity, venueState)">
+        <label for="eventName">Event Name</label>
+        <input type="text" name="name" ng-model="eventName">
+        <label for="venue">Venue Name</label>
+        <input type="text" name="venue" ng-model="venueName">
+        <label for="venueCity">City</label>
+        <input type="text" name="venueCity" ng-model="venueCity">
+        <label for="venueState">State</label>
+        <input type="text" name="venueState" ng-model="venueState">
+        <input type="submit" name="name" value="Add Event" ng-click="hideEventForm()">
+      </form>
+    </section>
   </div>
-</section>
-<section>
-  <button ng-click="showEventForm()" type="button" name="button">Add an Event</button>
-  <form ng-show="showForm" class="createEventForm" ng-submit="createEvent(eventName, venueName, venueCity, venueState)">
-    <label for="eventName">Event Name</label>
-    <input type="text" name="name" ng-model="eventName">
-    <label for="venue">Venue Name</label>
-    <input type="text" name="venue" ng-model="venueName">
-    <label for="venueCity">City</label>
-    <input type="text" name="venueCity" ng-model="venueCity">
-    <label for="venueState">State</label>
-    <input type="text" name="venueState" ng-model="venueState">
-    <input type="submit" name="name" value="Add Event" ng-click="hideEventForm()">
-  </form>
-</section>
+</ion-scroll>
