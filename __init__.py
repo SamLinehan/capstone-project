@@ -75,7 +75,8 @@ def create_event():
     venue_name = form_data["venueName"]
     venue_state = form_data["venueState"]
     event_name = form_data["eventName"]
-    new_event = {
+    db.events.insert_one(
+        {
         "date": "11/13/2015",
         "venue": {
             "city": venue_city,
@@ -84,11 +85,11 @@ def create_event():
             },
         "name": event_name,
         "room": {
-            "name" : venueName,
+            "name" : event_name,
             "posts": []
             }
         }
-    db.events.insert_one(new_event)
-
+    )
+    
 if __name__ == "__main__":
     app.run(debug=True)
