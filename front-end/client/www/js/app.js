@@ -38,7 +38,7 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
     .state('room',{
       url: '/room/:id',
       controller: function($scope, $stateParams, $http, $ionicModal){
-        var socket = io.connect('http://localhost:5000/test')
+        var socket = io.connect('https://ancient-springs-74201.herokuapp.com')
         $scope.id = $stateParams.id
         // $scope.eventName = $stateParams.name
         // $scope.venueName = $stateParams.venueName
@@ -73,33 +73,30 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
 
       $scope.createPost = function(postBody, postName, postImage) {
         if(postImage === undefined){
-          var data = {
+          var postData = {
             id: $scope.id,
             body: postBody,
             name: postName
           }
         } else {
-          var data = {
+          var postData = {
             id: $scope.id,
             body: postBody,
             name: postName,
             image: postImage
           }
         }
-        $http.post("http://localhost:5000/create_post", data).then(function(response){
+        socket.emit('post event', postData)
+
+        $http.post("https://infinite-waters-87993.herokuapp.com/create_post", postData).then(function(response){
           return
         })
-        // socket.on('sendPost', function(postData){
-        //   console.log(postData)
-        //   socket.emit('message', {data: postData})
-        // })
       };
-        // socket.on('test_event', function(message){
-        //   console.log(message)
-        // })
-        // socket.on('testing_message', function(message){
-        //   console.log(message)
-        // })
+
+        socket.on('post event', function(message){
+          console.log(message)
+          $scope.postResults.push(message)
+        })
 
       $scope.isActive = false
       $scope.favoritesButton = function(){
