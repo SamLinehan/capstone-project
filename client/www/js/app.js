@@ -81,15 +81,16 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
               name: postName,
               image: postImage
             }
-            // socket.emit('sendPost', data)
+            var socket = io.connect('https://infinite-waters-87993.herokuapp.com/test')
+            socket.on('test_event', function(message){
+              console.log(message)
+            })
+
+            socket.on('newPostEvent', function(post){
+              console.log(post)
+            })
           }
         }
-        // socket.on('server response', function(data){
-        //   console.log("Will this work?")
-        //   socket.emit("my event", {data: "Connected!!!"})
-        //   // $scope.postResults.push(data)
-        //   // $scope.apply()
-        // })
       },
       templateUrl: 'templates/live.html'
     });
