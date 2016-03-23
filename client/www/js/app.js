@@ -40,6 +40,10 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
       controller: function($scope, $stateParams, $http, $ionicModal){
         var socket = io.connect('http://localhost:5000/test')
         $scope.id = $stateParams.id
+        // $scope.eventName = $stateParams.name
+        // $scope.venueName = $stateParams.venueName
+        // $scope.venueCity = $stateParams.venueCity
+        // $scope.venueState = $stateParams.venueState
         $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
           $scope.postResults = []
           for(var i = 0; i < response.data.length; i++){
@@ -96,6 +100,11 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
         // socket.on('testing_message', function(message){
         //   console.log(message)
         // })
+
+      $scope.isActive = false
+      $scope.favoritesButton = function(){
+        $scope.isActive = !$scope.isActive
+      }
       },
       templateUrl: 'templates/live.html'
     });
