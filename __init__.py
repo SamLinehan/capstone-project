@@ -7,7 +7,6 @@ from bson.json_util import dumps
 from bson.objectid import ObjectId
 from os.path import join, dirname
 from dotenv import load_dotenv
-# from flask_socketio import SocketIO, send, emit
 from flask.ext.socketio import SocketIO, emit, send
 import ast
 import datetime
@@ -58,41 +57,16 @@ def create_event():
     )
 
 
-# socketio
-# @socketio.on('post_event' namespace="/test")
-# def handle_post(data):
-# socketio.emit('newPostEvent', {'newPost': {
-#             "event_id": ObjectId(venue_id),
-#              "post": {
-#                     "body": post_body,
-#                     "time": post_date,
-#                     "user_name": post_name
-#                     }
-#                 } }, namespace='/test')
-    # print("Hello from sockets")
-    # print(data)
-    # emit(data)
-    # emit('server response', {'data': 'Connected'})
 
 
-
+@app.route('/create_post', methods=["POST"])
 def create_post():
-    print(request.data)
     form_data = ast.literal_eval((request.data).decode())
     print(form_data)
     venue_id = form_data["id"]
     post_body = form_data["body"]
     post_name = form_data["name"]
     post_date = datetime.datetime.utcnow()
-
-    socketio.emit('newPostEvent', {'newPost': {
-                "event_id": ObjectId(venue_id),
-                 "post": {
-                        "body": post_body,
-                        "time": post_date,
-                        "user_name": post_name
-                        }
-                    } }, namespace='/test')
 
     if "image" in form_data:
         post_image = form_data["image"]
@@ -119,14 +93,23 @@ def create_post():
                 }
         })
 
+    socketio.emit('newPostEvent', {'newPost': {
+                "event_id": ObjectId(venue_id),
+                 "post": {
+                        "body": post_body,
+                        "time": post_date,
+                        "user_name": post_name
+                        }
+                    } }, namespace='/test')
+
     print("OKAY")
     return "OK"
 
 # ******
-# @socketio.on('test_event', namespace="/test")
-# def test_message(message):
-#     emit('testing', {'data': message['data']})
-#
+@socketio.on('test_event', namespace="/test")
+def test_message(message):
+    emit('testing', {'data': message['data']})
+
 #
 # @socketio.on('connect', namespace="/test")
 # def test_connect():

@@ -74,18 +74,18 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
             name: postName
           }
         } else {
-            var postData = {
+            var data = {
               id: $scope.id,
               body: postBody,
               name: postName,
               image: postImage
             }
-            $http.post("https://infinite-waters-87993.herokuapp.com/create_post", data).then(function(response){
-              console.log(data)
-              return
-            })
           }
-          var socket = io.connect('https://infinite-waters-87993.herokuapp.com/test')
+          $http.post("http://localhost:5000/create_post", data).then(function(response){
+            // console.log(data)
+            return
+          })
+          var socket = io.connect('http://localhost:5000/test')
           socket.on('test_event', function(message){
             console.log(message)
           })
