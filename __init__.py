@@ -62,7 +62,7 @@ def create_event():
 @app.route('/create_post', methods=["POST"])
 def create_post():
     form_data = ast.literal_eval((request.data).decode())
-    print(form_data)
+    # print(form_data)
     venue_id = form_data["id"]
     post_body = form_data["body"]
     post_name = form_data["name"]
@@ -93,27 +93,27 @@ def create_post():
                 }
         })
 
-    socketio.emit('newPostEvent', {'newPost': {
-                "event_id": ObjectId(venue_id),
-                 "post": {
-                        "body": post_body,
-                        "time": post_date,
-                        "user_name": post_name
-                        }
-                    } }, namespace='/test')
-
     print("OKAY")
     return "OK"
 
 # ******
-@socketio.on('test_event', namespace="/test")
-def test_message(message):
-    emit('testing', {'data': message['data']})
+# @socketio.on('message', namespace="/test")
+# def test_message(message):
+#     print(message)
+    # socketio.emit('newPostEvent', {'newPost': {
+    #             "event_id": ObjectId(venue_id),
+    #              "post": {
+    #                     "body": post_body,
+    #                     "time": post_date,
+    #                     "user_name": post_name
+    #                     }
+    #                 } }, namespace='/test')
 
-#
+
 # @socketio.on('connect', namespace="/test")
 # def test_connect():
 #     print("Connected!!!")
+#     emit('sendPost', {'data': 'hello world'})
 #     emit('test_event', {'data': 'Connected'})
 
 

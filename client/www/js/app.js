@@ -38,6 +38,7 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
     .state('room',{
       url: '/room/:id',
       controller: function($scope, $stateParams, $http, $ionicModal){
+        var socket = io.connect('http://localhost:5000/test')
         $scope.id = $stateParams.id
         $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
           $scope.postResults = []
@@ -74,26 +75,27 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
             name: postName
           }
         } else {
-            var data = {
-              id: $scope.id,
-              body: postBody,
-              name: postName,
-              image: postImage
-            }
+          var data = {
+            id: $scope.id,
+            body: postBody,
+            name: postName,
+            image: postImage
           }
-          $http.post("http://localhost:5000/create_post", data).then(function(response){
-            // console.log(data)
-            return
-          })
-          var socket = io.connect('http://localhost:5000/test')
-          socket.on('test_event', function(message){
-            console.log(message)
-          })
-
-          socket.on('newPostEvent', function(post){
-            console.log(post)
-          })
         }
+        $http.post("http://localhost:5000/create_post", data).then(function(response){
+          return
+        })
+        // socket.on('sendPost', function(postData){
+        //   console.log(postData)
+        //   socket.emit('message', {data: postData})
+        // })
+      };
+        // socket.on('test_event', function(message){
+        //   console.log(message)
+        // })
+        // socket.on('testing_message', function(message){
+        //   console.log(message)
+        // })
       },
       templateUrl: 'templates/live.html'
     });
