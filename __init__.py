@@ -7,7 +7,8 @@ from bson.json_util import dumps
 from bson.objectid import ObjectId
 from os.path import join, dirname
 from dotenv import load_dotenv
-from flask.ext.socketio import SocketIO, emit
+from flask_socketio import SocketIO, send, emit
+# from flask.ext.socketio import SocketIO, emit, send
 import ast
 import datetime
 
@@ -30,10 +31,6 @@ client = MongoClient(MONGO_URL)
 db = client[DB_NAME]
 events_collection = db['events']
 
-
-@app.route('/posts')
-def get_posts():
-    return jsonify({'posts': posts})
 
 @app.route('/events')
 def get_events():
@@ -60,14 +57,44 @@ def create_event():
         }
     )
 
-@app.route('/create_post', methods=['POST'])
+
+# socketio
+# @socketio.on('post_event' namespace="/test")
+# def handle_post(data):
+# socketio.emit('newPostEvent', {'newPost': {
+#             "event_id": ObjectId(venue_id),
+#              "post": {
+#                     "body": post_body,
+#                     "time": post_date,
+#                     "user_name": post_name
+#                     }
+#                 } }, namespace='/test')
+    # print("Hello from sockets")
+    # print(data)
+    # emit(data)
+    # emit('server response', {'data': 'Connected'})
+
+
+
+
 def create_post():
+    print(request.data)
     form_data = ast.literal_eval((request.data).decode())
     print(form_data)
     venue_id = form_data["id"]
     post_body = form_data["body"]
     post_name = form_data["name"]
     post_date = datetime.datetime.utcnow()
+
+    socketio.emit('newPostEvent', {'newPost': {
+                "event_id": ObjectId(venue_id),
+                 "post": {
+                        "body": post_body,
+                        "time": post_date,
+                        "user_name": post_name
+                        }
+                    } }, namespace='/test')
+
     if "image" in form_data:
         post_image = form_data["image"]
         db.events.update(
@@ -92,29 +119,21 @@ def create_post():
                     }
                 }
         })
-        socketio.emit('newPostEvent', {'newPost': {
-                    "event_id": ObjectId(venue_id),
-                     "post": {
-                            "body": post_body,
-                            "time": post_date,
-                            "user_name": post_name
-                            }
-                        } })
 
-@socketio.on('test_event', namespace="/test")
-def test_message(message):
-    emit('testing', {'data': message['data']})
+    print("OKAY")
+    return "OK"
 
+# ******
+# @socketio.on('test_event', namespace="/test")
+# def test_message(message):
+#     emit('testing', {'data': message['data']})
+#
+#
+# @socketio.on('connect', namespace="/test")
+# def test_connect():
+#     print("Connected!!!")
+#     emit('test_event', {'data': 'Connected'})
 
-@socketio.on('connect', namespace="/test")
-def test_connect():
-    print("Connected!!!")
-    emit('test_event', {'data': 'Connected'})
-
-
-@socketio.on('disconnect', namespace="/test")
-def test_disconnect():
-    print('Client Disconnected')
 
 if __name__ == "__main__":
     app.run(debug=True)
