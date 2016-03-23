@@ -38,7 +38,6 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
     .state('room',{
       url: '/room/:id',
       controller: function($scope, $stateParams, $http, $ionicModal){
-        var socket = io.connect("http://localhost:5000/posts")
         $scope.id = $stateParams.id
         $http.get('https://infinite-waters-87993.herokuapp.com/events').then(function(response){
           $scope.postResults = []
@@ -81,15 +80,19 @@ angular.module('capstone', ['ionic', 'ngCordova', 'capstone.controllers', 'capst
               name: postName,
               image: postImage
             }
-            var socket = io.connect('https://infinite-waters-87993.herokuapp.com/test')
-            socket.on('test_event', function(message){
-              console.log(message)
-            })
-
-            socket.on('newPostEvent', function(post){
-              console.log(post)
+            $http.post("https://infinite-waters-87993.herokuapp.com/create_post", data).then(function(response){
+              console.log(data)
+              return
             })
           }
+          var socket = io.connect('https://infinite-waters-87993.herokuapp.com/test')
+          socket.on('test_event', function(message){
+            console.log(message)
+          })
+
+          socket.on('newPostEvent', function(post){
+            console.log(post)
+          })
         }
       },
       templateUrl: 'templates/live.html'

@@ -7,8 +7,8 @@ from bson.json_util import dumps
 from bson.objectid import ObjectId
 from os.path import join, dirname
 from dotenv import load_dotenv
-from flask_socketio import SocketIO, send, emit
-# from flask.ext.socketio import SocketIO, emit, send
+# from flask_socketio import SocketIO, send, emit
+from flask.ext.socketio import SocketIO, emit, send
 import ast
 import datetime
 
@@ -73,7 +73,6 @@ def create_event():
     # print(data)
     # emit(data)
     # emit('server response', {'data': 'Connected'})
-
 
 
 
